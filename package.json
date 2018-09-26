@@ -1,0 +1,25 @@
+{
+  "name": "dbx",
+  "version": "1.0.0",
+  "description": "The serverless application.",
+  "main": "www.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github-dbxhub:dbxhub/dbx.git"
+  },
+  "keywords": [],
+  "author": "Irene A. Mitchell",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^3.0.0",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.3",
+    "mongodb": "^3.1.3",
+    "underscore": "^1.9.1",
+    "validator": "^10.6.0"
+  }
+}
