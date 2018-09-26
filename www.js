@@ -9,13 +9,14 @@ if ( Config.error ) {
     return; // Don't run http server
 }
 
-console.log(Config);
+global.Config = Config;
+global.ABSPATH = path.resolve(__dirname, './');
 
 http.createServer( (req, res ) => {
     // Watch for file changes and clear cached
     require('./includes/clear-cache');
 
     // Load application
-    require('./includes/router');
+    require('./includes/router')(req, res);
 
 }).listen(Config.Port);
