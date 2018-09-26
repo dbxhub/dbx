@@ -1,1 +1,2 @@
-# dbx
+# DBX
+The serverless application.
