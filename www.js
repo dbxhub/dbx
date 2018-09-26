@@ -11,6 +11,7 @@ if ( Config.error ) {
 
 global.Config = Config;
 global.ABSPATH = path.resolve(__dirname, './');
+global._ = require('underscore');
 
 http.createServer( (req, res ) => {
     // Watch for file changes and clear cached

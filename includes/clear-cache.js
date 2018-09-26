@@ -18,7 +18,19 @@ const clearCache = (filename) => {
 const libPath = path.resolve(__dirname, './../includes');
 
 fs.watch(libPath, (err, filename) => {
+    if ( err ) {
+        return;
+    }
+
     filename = path.resolve( libPath, filename );
     clearCache(filename);
 });
 
+fs.watch(ABSPATH, (err, filename) => {
+    if ( err ) {
+        return;
+    }
+
+    filename = path.resolve( ABSPATH, filename );
+    clearCache(filename);
+});

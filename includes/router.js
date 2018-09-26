@@ -3,8 +3,9 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     dbxHttp = express();
 
-dbxHttp.use(cookieParser(), bodyParser.json(), (req, res) => {
-    res.end('You are here');
-});
+require('./functions');
+require('./l8n');
+
+dbxHttp.use(cookieParser(), bodyParser.json(), require('./db'));
 
 module.exports = dbxHttp;
