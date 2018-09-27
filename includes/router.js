@@ -1,10 +1,11 @@
-const express = require('express'),
+const express    = require('express'),
     cookieParser = require('cookie-parser'),
-    bodyParser = require('body-parser'),
-    dbxHttp = express();
+    bodyParser   = require('body-parser'),
+    dbxHttp      = express();
 
 require('./functions');
 require('./l8n');
+require('./db');
 
 dbxHttp.use(cookieParser(), bodyParser.json(), require('./db'));
 

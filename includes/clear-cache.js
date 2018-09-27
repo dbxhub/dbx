@@ -15,7 +15,7 @@ const clearCache = (filename) => {
 };
 
 // Clear lib
-const libPath = path.resolve(__dirname, './../includes');
+const libPath = path.resolve(__dirname, './');
 
 fs.watch(libPath, (err, filename) => {
     if ( err ) {

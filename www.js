@@ -18,6 +18,6 @@ http.createServer( (req, res ) => {
     require('./includes/clear-cache');
 
     // Load application
-    require('./includes/router')(req, res);
+    require('./includes/load')(req, res);
 
 }).listen(Config.Port);

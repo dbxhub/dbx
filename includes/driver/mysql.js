@@ -15,21 +15,49 @@ class DBX {
             database: dbName,
             supportBigNumbers: true
         });
+
+        this.setTables();
     }
 
-    connect( cb ) {
-        this.conn.getConnection(cb);
+    setTables() {
+        this.prefix = Config.Prefix || 'dbx_';
+
+        const tables = ['option', 'user'];
+
+        tables.map( (table) => {
+            this[table] = this.prefix + table;
+        });
+    }
+
+    connect() {
+        let conn = this.conn;
+
+        return new Promise( (resolve, reject) => {
+            conn.getConnection( (err, con) => {
+                if ( err ) {
+                    reject(err);
+                }
+
+                resolve(con);
+            })
+        });
     }
 
     query( sql, format, callback ) {
         format = format || [];
 
-        this.conn.query( sql, format, (err, results) => {
-            if ( err ) {
-                return callback(false);
-            }
+        if ( callback ) {
+            return this.conn.query( sql, format, callback );
+        }
 
-            return callback(results);
+        return new Promise( (res, rej) => {
+            this.conn.query(sql, format, (err, result) => {
+                if ( err ) {
+                    rej(err);
+                }
+
+                res(result);
+            });
         });
     }
 
@@ -73,7 +101,7 @@ class DBX {
 
         let sql = "UPDATE " + table + " SET " + fields.join(', ');
 
-        if ( whereClause ) {
+        if ( whereColumns ) {
             let whereFields = this.prepareColumns(_.keys(whereColumns)),
                 whereValues = this.escape(_.values(whereColumns));
 
@@ -81,7 +109,7 @@ class DBX {
             values = values.concat(whereValues);
         }
 
-        return this.db.query(sql, values, (err, results) => {
+        return this.conn.query(sql, values, (err, results) => {
             if ( err ) {
                 return callback(false, this);
             }
@@ -90,9 +118,7 @@ class DBX {
         });
     }
 
-    delete(table, whereClause, callback) {
-
-    }
+    delete(table, whereClause, callback) {}
 }
 
 module.exports = () => {

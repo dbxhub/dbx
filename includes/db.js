@@ -1,8 +1,10 @@
+
+
 module.exports = (req, res, next) => {
 
     if ( ! Config.Driver ) {
         // Show 500 error
-        res.end('500 ERROR');
+        res.end('Configuration error!');
     }
 
     const driver = Config.Driver.toLowerCase();
@@ -13,16 +15,20 @@ module.exports = (req, res, next) => {
         DBX = require('./driver/' + driver);
     } catch(e) {
         // Show 500 error
-        res.end('500 ERROR 2');
+        res.end('Configuration error!');
     }
 
     global.dbx = DBX();
 
-    dbx.connect((err) => {
-        if ( err ) {
+    dbx.connect()
+        .then(() => {
+            // Get site options here
+            return 'GET OPTIONS';
+        })
+        .then((o) => {
+            res.end(o);
+        })
+        .catch(() => {
             res.end('Error establishing database connection!');
-        }
-
-        next();
-    });
+        });
 };
